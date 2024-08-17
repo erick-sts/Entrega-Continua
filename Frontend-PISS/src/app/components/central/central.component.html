@@ -1,0 +1,89 @@
+<app-navbar></app-navbar>
+<body>
+
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+        <header id="headerMain">
+          <h2 class="text-center mb-4">
+            Lista de Professores Cadastrados
+          </h2>
+
+          <form
+            (submit)="buscarProfessorPorCurso([inputCursoCdn, inputCursoDsm, inputCursoCoo]);$event.preventDefault(); buscarProfessorPeloNome(inputPesquisa.value);$event.preventDefault()">
+
+            <div id="contadorProfessores">
+              <label for="contadorProfessoresCadastrados">Professores Cadastrados</label>
+              <p> {{quantidadeProfessoresCadastrados}}</p>
+            </div>
+
+            <div id="conjuntoFiltroCheckBox">
+              <div class="filtroCheckBox">
+                <label for="" class="form-check-label">DSM</label>
+                <input type="checkbox" class="form-check-label" value="DSM" #inputCursoDsm />
+              </div>
+
+              <div class="filtroCheckBox">
+                <label for="" class="form-check-label">COO</label>
+                <input type="checkbox" #inputCursoCoo value="COO" />
+              </div>
+
+              <div class="filtroCheckBox">
+                <label for="" class="form-check-label">CDN</label>
+                <input type="checkbox" #inputCursoCdn value="CDN" />
+              </div>
+            </div>
+
+            <input type="text" class="form-control" id="inputPesquisa" #inputPesquisa name="pesquisa"
+              placeholder="Pesquise sobre o professor" />
+
+            <button type="submit" class="btn btn-secondary">Pesquisar</button>
+          </form>
+        </header>
+        <table class="table table-striped table-bordered text-center">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">Nome Completo</th>
+              <th scope="col">E-mail</th>
+              <th scope="col">Titulação</th>
+              <th scope="col">Curso</th>
+              <th scope="col">Núm Matricula</th>
+              <th scope="col">Código UE - SEDE</th>
+              <th scope="col">Curriculum Lattes</th>
+              <th scope="col">Opções</th>
+            </tr>
+          </thead>
+          <tbody id="dadosTabela">
+            <tr *ngFor="let professor of professores">
+              <th scope="row">{{ professor.nome }}</th>
+              <td>{{ professor.email }}</td>
+              <td>{{ professor.titulacao }}</td>
+              <td>{{ professor.curso }}</td>
+              <td>{{ professor.numero_matricula }}</td>
+              <td>{{ professor.cod_ue }}</td>
+              <td id="urlLates" style="
+                  max-width: 200px;
+                  word-wrap: break-word;
+                  overflow: hidden;
+                ">
+                {{ professor.lates }}
+              </td>
+              <td>
+                <br />
+                <a [routerLink]="['/edicaoProfessor', professor.nome]" class="colunaOpcoes">📝</a>
+                <a class="colunaOpcoes" (click)="excluirProfessor(professor)">🗑️</a>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"></th>
+            </tr>
+          </tbody>
+        </table>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
